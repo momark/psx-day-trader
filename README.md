@@ -40,7 +40,7 @@ ten skills:
 
 ```bash
 # 1. Clone next to your other Claude Code skills, or into any project folder.
-git clone https://github.com/<you>/psx-day-trader.git
+git clone https://github.com/momark/psx-day-trader.git
 
 # 2. One-time Python setup.
 python3 -m pip install playwright

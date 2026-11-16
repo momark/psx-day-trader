@@ -16,10 +16,10 @@
     "claude-code",
     "claude-skill"
   ],
-  "homepage": "https://github.com/your-github-user/psx-day-trader",
+  "homepage": "https://github.com/momark/psx-day-trader",
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-github-user/psx-day-trader.git"
+    "url": "https://github.com/momark/psx-day-trader.git"
   },
   "requires": {
     "python": ">=3.10",
