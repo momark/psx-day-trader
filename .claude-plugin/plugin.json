@@ -1,0 +1,43 @@
+{
+  "name": "psx-day-trader",
+  "version": "0.1.0",
+  "description": "Day-trade the Pakistan Stock Exchange (PSX) on free PSX Data Portal data: scanner, news, entry, exit, timemachine, budget, risk, paper ticket, alerts, analyst.",
+  "author": {
+    "name": "psx-day-trader contributors"
+  },
+  "license": "MIT",
+  "keywords": [
+    "psx",
+    "pakistan-stock-exchange",
+    "day-trading",
+    "kse-100",
+    "kmi-30",
+    "shariah",
+    "claude-code",
+    "claude-skill"
+  ],
+  "homepage": "https://github.com/your-github-user/psx-day-trader",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-github-user/psx-day-trader.git"
+  },
+  "requires": {
+    "python": ">=3.10",
+    "packages": [
+      "playwright >= 1.40.0"
+    ],
+    "setup": "python -m playwright install chromium"
+  },
+  "skills": [
+    { "name": "psx-scanner",     "path": ".claude/skills/psx-scanner" },
+    { "name": "psx-news",        "path": ".claude/skills/psx-news" },
+    { "name": "psx-entry",       "path": ".claude/skills/psx-entry" },
+    { "name": "psx-exit",        "path": ".claude/skills/psx-exit" },
+    { "name": "psx-timemachine", "path": ".claude/skills/psx-timemachine" },
+    { "name": "psx-budget",      "path": ".claude/skills/psx-budget" },
+    { "name": "psx-risk",        "path": ".claude/skills/psx-risk" },
+    { "name": "psx-ticket",      "path": ".claude/skills/psx-ticket" },
+    { "name": "psx-alerts",      "path": ".claude/skills/psx-alerts" },
+    { "name": "psx-analyst",     "path": ".claude/skills/psx-analyst" }
+  ]
+}

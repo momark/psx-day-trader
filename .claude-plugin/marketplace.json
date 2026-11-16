@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-marketplace.json",
+  "name": "psx-day-trader",
+  "owner": {
+    "name": "psx-day-trader contributors",
+    "url": "https://github.com/your-github-user/psx-day-trader"
+  },
+  "plugins": [
+    {
+      "name": "psx-day-trader",
+      "source": "./",
+      "description": "Day-trade the Pakistan Stock Exchange on free PSX Data Portal data. Ten skills: scanner, news, entry, exit, timemachine, budget, risk, paper ticket, alerts, analyst. Costs in PKR, KSE-100 / KMI-30 / Shariah filters, Asia/Karachi clock, 2026 PSX calendar, scrip circuit breaker.",
+      "version": "0.1.0",
+      "tags": ["psx", "pakistan", "day-trading", "shariah", "kse-100"]
+    }
+  ]
+}

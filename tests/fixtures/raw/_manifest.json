@@ -1,0 +1,701 @@
+{
+  "captured_at_utc": "2026-11-16T19:36:00.386814+00:00",
+  "host": "https://dps.psx.com.pk",
+  "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+  "items": [
+    {
+      "name": "symbols.json",
+      "path": "/symbols",
+      "method": "GET",
+      "form": null,
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "len": 137912,
+      "ms": 0,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\symbols.json",
+      "head": "[{\"symbol\":\"AKBLTFC6\",\"name\":\"Askari Bank(TFC6)\",\"sectorName\":\"BILLS AND BONDS\",\"isETF\":false,\"isDebt\":true},{\"symbol\":\"BAFLTFC6\",\"name\":\"Bank Al-Falah(TFC6\",\"sectorName\":\"BILLS AND BONDS\",\"isETF\":false,\"isDebt\":true},{\"symbol\":\"BAFLTFC8\",\"name\":\"Bank Alfalah(TFC8)\",\"sectorName\":\"BILLS AND BONDS\",\"i"
+    },
+    {
+      "name": "eligible-scrips-REG.xml",
+      "path": "/data/eligible-scrips/REG.xml",
+      "method": "GET",
+      "form": null,
+      "status": 200,
+      "content_type": "application/octet-stream; charset=utf-8",
+      "len": 55591,
+      "ms": 1396,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\eligible-scrips-REG.xml",
+      "head": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><eligible_data><data><data><symbol_code>786</symbol_code><symbol_name>786 Investments Limited</symbol_name></data><data><symbol_code>AABS</symbol_code><symbol_name>Al-Abbas Sugar Mills Limited</symbol_name></data><data><symbol_code>AAL</symbol_code><symbol_name>"
+    },
+    {
+      "name": "company-OGDC.html",
+      "path": "/company/OGDC",
+      "method": "GET",
+      "form": null,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "len": 407475,
+      "ms": 0,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\company-OGDC.html",
+      "head": "<!DOCTYPE html><html><head><meta http-equiv=\"origin-trial\" content=\"A7vZI3v+Gz7JfuRolKNM4Aff6zaGuT7X0mf3wtoZTnKv6497cVMnhy03KDqX7kBz/q/iidW7srW31oQbBt4VhgoAAACUeyJvcmlnaW4iOiJodHRwczovL3d3dy5nb29nbGUuY29tOjQ0MyIsImZlYXR1cmUiOiJEaXNhYmxlVGhpcmRQYXJ0eVN0b3JhZ2VQYXJ0aXRpb25pbmczIiwiZXhwaXJ5IjoxNzU3OTgw"
+    },
+    {
+      "name": "ts-int-OGDC.json",
+      "path": "/timeseries/int/OGDC",
+      "method": "GET",
+      "form": null,
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "len": 65777,
+      "ms": 0,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\ts-int-OGDC.json",
+      "head": "{\"status\":1,\"message\":\"\",\"data\":[[1794826195,316.2,1],[1794826178,316.2,10],[1794826173,316.2,300],[1794826170,316.2,10],[1794826095,316.2,100],[1794826085,316.2,3],[1794826079,316.2,1470],[1794826048,316.2,10000],[1794825922,316.2,1],[1794825825,316.2,200],[1794825584,316.2,300],[1794825461,316.2,2"
+    },
+    {
+      "name": "company-reports-OGDC.html",
+      "path": "/company/reports/OGDC",
+      "method": "GET",
+      "form": null,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "len": 7277,
+      "ms": 0,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\company-reports-OGDC.html",
+      "head": "<table class=\"tbl\"><thead class=\"tbl__head\"><tr><th>Reports</th><th>Period Ended</th><th>Posting Date</th></tr></thead><tbody class=\"tbl__body\"><tr><td><a target=\"_blank\" href=\"https://financials.psx.com.pk/lib/DownloadPDF.php?id=OGDC-ANNUAL-2012\">Annual</a></td><td>2013</td><td>2018-12-27</td></tr>"
+    },
+    {
+      "name": "company-payouts-OGDC.html",
+      "path": "/company/payouts",
+      "method": "POST",
+      "form": {
+        "symbol": "OGDC"
+      },
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "len": 1160,
+      "ms": 0,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\company-payouts-OGDC.html",
+      "head": "<table class=\"tbl\"><thead class=\"tbl__head\"><tr><th>Date</th><th>Financial Results</th><th>Details</th><th>Book Closure</th></tr></thead><tbody class=\"tbl__body\"><tr><td>October 30, 2026 12:30 PM</td><td>30/09/2026(IQ)</td><td> 50% (i) (D) </td><td>11/11/2026  - 12/11/2026 </td></tr><tr><td>Septembe"
+    },
+    {
+      "name": "company-HUBC.html",
+      "path": "/company/HUBC",
+      "method": "GET",
+      "form": null,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "len": 457228,
+      "ms": 0,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\company-HUBC.html",
+      "head": "<!DOCTYPE html><html><head><meta http-equiv=\"origin-trial\" content=\"A7vZI3v+Gz7JfuRolKNM4Aff6zaGuT7X0mf3wtoZTnKv6497cVMnhy03KDqX7kBz/q/iidW7srW31oQbBt4VhgoAAACUeyJvcmlnaW4iOiJodHRwczovL3d3dy5nb29nbGUuY29tOjQ0MyIsImZlYXR1cmUiOiJEaXNhYmxlVGhpcmRQYXJ0eVN0b3JhZ2VQYXJ0aXRpb25pbmczIiwiZXhwaXJ5IjoxNzU3OTgw"
+    },
+    {
+      "name": "ts-int-HUBC.json",
+      "path": "/timeseries/int/HUBC",
+      "method": "GET",
+      "form": null,
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "len": 78450,
+      "ms": 0,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\ts-int-HUBC.json",
+      "head": "{\"status\":1,\"message\":\"\",\"data\":[[1794826000,207.02,76],[1794825991,207.02,500],[1794825987,207.02,1],[1794825981,207.02,1],[1794825979,207.02,24],[1794825978,207.02,1],[1794825973,207.02,1],[1794825967,207.02,3],[1794825958,207.02,1],[1794825957,207.02,20],[1794825947,207.02,1],[1794825939,207.02,1"
+    },
+    {
+      "name": "company-reports-HUBC.html",
+      "path": "/company/reports/HUBC",
+      "method": "GET",
+      "form": null,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "len": 8082,
+      "ms": 0,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\company-reports-HUBC.html",
+      "head": "<table class=\"tbl\"><thead class=\"tbl__head\"><tr><th>Reports</th><th>Period Ended</th><th>Posting Date</th></tr></thead><tbody class=\"tbl__body\"><tr><td><a target=\"_blank\" href=\"https://financials.psx.com.pk/lib/DownloadPDF.php?id=HUBC-ANNUAL-2013\">Annual</a></td><td>2013</td><td>2018-12-27</td></tr>"
+    },
+    {
+      "name": "company-payouts-HUBC.html",
+      "path": "/company/payouts",
+      "method": "POST",
+      "form": {
+        "symbol": "HUBC"
+      },
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "len": 1029,
+      "ms": 0,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\company-payouts-HUBC.html",
+      "head": "<table class=\"tbl\"><thead class=\"tbl__head\"><tr><th>Date</th><th>Financial Results</th><th>Details</th><th>Book Closure</th></tr></thead><tbody class=\"tbl__body\"><tr><td>October 28, 2026 2:46 PM</td><td>30/09/2026(IQ)</td><td> 50%(i) (D) </td><td>10/11/2026  - 12/11/2026 </td></tr><tr><td>August 27,"
+    },
+    {
+      "name": "company-LUCK.html",
+      "path": "/company/LUCK",
+      "method": "GET",
+      "form": null,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "len": 397168,
+      "ms": 0,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\company-LUCK.html",
+      "head": "<!DOCTYPE html><html><head><meta http-equiv=\"origin-trial\" content=\"A7vZI3v+Gz7JfuRolKNM4Aff6zaGuT7X0mf3wtoZTnKv6497cVMnhy03KDqX7kBz/q/iidW7srW31oQbBt4VhgoAAACUeyJvcmlnaW4iOiJodHRwczovL3d3dy5nb29nbGUuY29tOjQ0MyIsImZlYXR1cmUiOiJEaXNhYmxlVGhpcmRQYXJ0eVN0b3JhZ2VQYXJ0aXRpb25pbmczIiwiZXhwaXJ5IjoxNzU3OTgw"
+    },
+    {
+      "name": "ts-int-LUCK.json",
+      "path": "/timeseries/int/LUCK",
+      "method": "GET",
+      "form": null,
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "len": 65749,
+      "ms": 0,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\ts-int-LUCK.json",
+      "head": "{\"status\":1,\"message\":\"\",\"data\":[[1794825782,444.52,180],[1794825729,444.52,10],[1794825535,444.52,50],[1794825437,444.52,222],[1794825415,444.52,4778],[1794825345,444.52,500],[1794825335,444.52,83],[1794825332,444.52,20],[1794825324,444.52,100],[1794825300,444.52,277],[1794825108,444.52,500],[17948"
+    },
+    {
+      "name": "company-reports-LUCK.html",
+      "path": "/company/reports/LUCK",
+      "method": "GET",
+      "form": null,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "len": 8243,
+      "ms": 0,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\company-reports-LUCK.html",
+      "head": "<table class=\"tbl\"><thead class=\"tbl__head\"><tr><th>Reports</th><th>Period Ended</th><th>Posting Date</th></tr></thead><tbody class=\"tbl__body\"><tr><td><a target=\"_blank\" href=\"https://financials.psx.com.pk/lib/DownloadPDF.php?id=LUCK-Q3-2013\">Quarterly</a></td><td>2013-03-31</td><td>2018-12-27</td>"
+    },
+    {
+      "name": "company-payouts-LUCK.html",
+      "path": "/company/payouts",
+      "method": "POST",
+      "form": {
+        "symbol": "LUCK"
+      },
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "len": 419,
+      "ms": 0,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\company-payouts-LUCK.html",
+      "head": "<table class=\"tbl\"><thead class=\"tbl__head\"><tr><th>Date</th><th>Financial Results</th><th>Details</th><th>Book Closure</th></tr></thead><tbody class=\"tbl__body\"><tr><td>August 10, 2026 4:15 PM</td><td>30/06/2026(YR)</td><td> 250%(F) (D) </td><td>18/09/2026  - 25/09/2026 </td></tr><tr><td>August 11,"
+    },
+    {
+      "name": "company-ENGROH.html",
+      "path": "/company/ENGROH",
+      "method": "GET",
+      "form": null,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "len": 241286,
+      "ms": 0,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\company-ENGROH.html",
+      "head": "<!DOCTYPE html><html><head><meta http-equiv=\"origin-trial\" content=\"A7vZI3v+Gz7JfuRolKNM4Aff6zaGuT7X0mf3wtoZTnKv6497cVMnhy03KDqX7kBz/q/iidW7srW31oQbBt4VhgoAAACUeyJvcmlnaW4iOiJodHRwczovL3d3dy5nb29nbGUuY29tOjQ0MyIsImZlYXR1cmUiOiJEaXNhYmxlVGhpcmRQYXJ0eVN0b3JhZ2VQYXJ0aXRpb25pbmczIiwiZXhwaXJ5IjoxNzU3OTgw"
+    },
+    {
+      "name": "ts-int-ENGROH.json",
+      "path": "/timeseries/int/ENGROH",
+      "method": "GET",
+      "form": null,
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "len": 27942,
+      "ms": 0,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\ts-int-ENGROH.json",
+      "head": "{\"status\":1,\"message\":\"\",\"data\":[[1794826161,279.42,5],[1794825978,279.42,1000],[1794825953,279.42,2],[1794825626,279.42,5],[1794825507,279.42,50],[1794825328,279.42,500],[1794825117,279.42,0],[1794824992,279.6,10],[1794824991,279.75,1500],[1794824977,279.5,500],[1794824972,279.5,100],[1794824964,27"
+    },
+    {
+      "name": "company-reports-ENGROH.html",
+      "path": "/company/reports/ENGROH",
+      "method": "GET",
+      "form": null,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "len": 1072,
+      "ms": 0,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\company-reports-ENGROH.html",
+      "head": "<table class=\"tbl\"><thead class=\"tbl__head\"><tr><th>Reports</th><th>Period Ended</th><th>Posting Date</th></tr></thead><tbody class=\"tbl__body\"><tr><td><a target=\"_blank\" href=\"https://financials.psx.com.pk/lib/DownloadPDF.php?id=250529\">Annual</a></td><td>2024</td><td>2025-04-04</td></tr><tr><td><a"
+    },
+    {
+      "name": "company-payouts-ENGROH.html",
+      "path": "/company/payouts",
+      "method": "POST",
+      "form": {
+        "symbol": "ENGROH"
+      },
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "len": 178,
+      "ms": 0,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\company-payouts-ENGROH.html",
+      "head": "<table class=\"tbl\"><thead class=\"tbl__head\"><tr><th>Date</th><th>Financial Results</th><th>Details</th><th>Book Closure</th></tr></thead><tbody class=\"tbl__body\"></tbody></table>"
+    },
+    {
+      "name": "ts-eod-OGDC.json",
+      "path": "/timeseries/eod/OGDC",
+      "method": "GET",
+      "form": null,
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "len": 41173,
+      "ms": 875,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\ts-eod-OGDC.json",
+      "head": "{\"status\":1,\"message\":\"\",\"data\":[[1794826800,316.2,3035626,318.44],[1794567600,315.87,3071905,312],[1794481200,313.39,1773101,316.44],[1794394800,316.08,4039950,318],[1794308400,317.02,5507843,315.89],[1793962800,312.89,4692324,312.11],[1793876400,316.24,4918491,315],[1793790000,310.47,2752982,304],"
+    },
+    {
+      "name": "ts-eod-HUBC.json",
+      "path": "/timeseries/eod/HUBC",
+      "method": "GET",
+      "form": null,
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "len": 41039,
+      "ms": 866,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\ts-eod-HUBC.json",
+      "head": "{\"status\":1,\"message\":\"\",\"data\":[[1794826800,207.02,4409319,204.25],[1794567600,204.2,1762514,205],[1794481200,205.33,2129328,209],[1794394800,208.98,3104745,210],[1794308400,209.9,7021361,208.85],[1793962800,201.61,2191687,203.05],[1793876400,208.05,5846276,206.73],[1793790000,204.17,5500258,197.5]"
+    },
+    {
+      "name": "ts-eod-LUCK.json",
+      "path": "/timeseries/eod/LUCK",
+      "method": "GET",
+      "form": null,
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "len": 39989,
+      "ms": 885,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\ts-eod-LUCK.json",
+      "head": "{\"status\":1,\"message\":\"\",\"data\":[[1794826800,444.52,2154014,445.01],[1794567600,443.04,2176447,432.5],[1794481200,436.38,1243602,450],[1794394800,445.06,1680982,449.99],[1794308400,451.11,5870082,439],[1793962800,427.23,990631,430],[1793876400,434.63,2884518,425],[1793790000,415.14,2221871,403.8],[1"
+    },
+    {
+      "name": "ts-eod-ENGROH.json",
+      "path": "/timeseries/eod/ENGROH",
+      "method": "GET",
+      "form": null,
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "len": 38359,
+      "ms": 736,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\ts-eod-ENGROH.json",
+      "head": "{\"status\":1,\"message\":\"\",\"data\":[[1794826800,279.42,1509493,277.5],[1794567600,277.45,1097707,275.04],[1794481200,276.89,933199,278.02],[1794394800,278.02,2705108,279.6],[1794308400,278.89,3359214,275],[1793962800,272.41,780681,271.5],[1793876400,275.42,2058748,272.8],[1793790000,269.81,1679441,262."
+    },
+    {
+      "name": "historical-2026-11-17.html",
+      "path": "/historical",
+      "method": "POST",
+      "form": {
+        "date": "2026-11-17"
+      },
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "len": 903,
+      "ms": 577,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\historical-2026-11-17.html",
+      "head": "<!-- .note(style=\"margin-bottom: 1rem;\")div * Queued order represents cummulative volume of all orders placed in the trading system during the day.\ndiv ** Cancelled order represents volume of all the cancelled orders excluding the orders cancelled by the trading system during dump state.\n--><div cla"
+    },
+    {
+      "name": "historical-2026-11-16.html",
+      "path": "/historical",
+      "method": "POST",
+      "form": {
+        "date": "2026-11-16"
+      },
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "len": 366537,
+      "ms": 1304,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\historical-2026-11-16.html",
+      "head": "<!-- .note(style=\"margin-bottom: 1rem;\")div * Queued order represents cummulative volume of all orders placed in the trading system during the day.\ndiv ** Cancelled order represents volume of all the cancelled orders excluding the orders cancelled by the trading system during dump state.\n--><div cla"
+    },
+    {
+      "name": "historical-2026-11-13.html",
+      "path": "/historical",
+      "method": "POST",
+      "form": {
+        "date": "2026-11-13"
+      },
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "len": 359439,
+      "ms": 1762,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\historical-2026-11-13.html",
+      "head": "<!-- .note(style=\"margin-bottom: 1rem;\")div * Queued order represents cummulative volume of all orders placed in the trading system during the day.\ndiv ** Cancelled order represents volume of all the cancelled orders excluding the orders cancelled by the trading system during dump state.\n--><div cla"
+    },
+    {
+      "name": "historical-2026-11-12.html",
+      "path": "/historical",
+      "method": "POST",
+      "form": {
+        "date": "2026-11-12"
+      },
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "len": 358659,
+      "ms": 1276,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\historical-2026-11-12.html",
+      "head": "<!-- .note(style=\"margin-bottom: 1rem;\")div * Queued order represents cummulative volume of all orders placed in the trading system during the day.\ndiv ** Cancelled order represents volume of all the cancelled orders excluding the orders cancelled by the trading system during dump state.\n--><div cla"
+    },
+    {
+      "name": "historical-2026-11-11.html",
+      "path": "/historical",
+      "method": "POST",
+      "form": {
+        "date": "2026-11-11"
+      },
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "len": 359013,
+      "ms": 1435,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\historical-2026-11-11.html",
+      "head": "<!-- .note(style=\"margin-bottom: 1rem;\")div * Queued order represents cummulative volume of all orders placed in the trading system during the day.\ndiv ** Cancelled order represents volume of all the cancelled orders excluding the orders cancelled by the trading system during dump state.\n--><div cla"
+    },
+    {
+      "name": "historical-2026-11-10.html",
+      "path": "/historical",
+      "method": "POST",
+      "form": {
+        "date": "2026-11-10"
+      },
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "len": 355442,
+      "ms": 1192,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\historical-2026-11-10.html",
+      "head": "<!-- .note(style=\"margin-bottom: 1rem;\")div * Queued order represents cummulative volume of all orders placed in the trading system during the day.\ndiv ** Cancelled order represents volume of all the cancelled orders excluding the orders cancelled by the trading system during dump state.\n--><div cla"
+    },
+    {
+      "name": "historical-2026-11-09.html",
+      "path": "/historical",
+      "method": "POST",
+      "form": {
+        "date": "2026-11-09"
+      },
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "len": 903,
+      "ms": 572,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\historical-2026-11-09.html",
+      "head": "<!-- .note(style=\"margin-bottom: 1rem;\")div * Queued order represents cummulative volume of all orders placed in the trading system during the day.\ndiv ** Cancelled order represents volume of all the cancelled orders excluding the orders cancelled by the trading system during dump state.\n--><div cla"
+    },
+    {
+      "name": "historical-2026-11-06.html",
+      "path": "/historical",
+      "method": "POST",
+      "form": {
+        "date": "2026-11-06"
+      },
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "len": 357788,
+      "ms": 1306,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\historical-2026-11-06.html",
+      "head": "<!-- .note(style=\"margin-bottom: 1rem;\")div * Queued order represents cummulative volume of all orders placed in the trading system during the day.\ndiv ** Cancelled order represents volume of all the cancelled orders excluding the orders cancelled by the trading system during dump state.\n--><div cla"
+    },
+    {
+      "name": "historical-2026-11-05.html",
+      "path": "/historical",
+      "method": "POST",
+      "form": {
+        "date": "2026-11-05"
+      },
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "len": 354513,
+      "ms": 1205,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\historical-2026-11-05.html",
+      "head": "<!-- .note(style=\"margin-bottom: 1rem;\")div * Queued order represents cummulative volume of all orders placed in the trading system during the day.\ndiv ** Cancelled order represents volume of all the cancelled orders excluding the orders cancelled by the trading system during dump state.\n--><div cla"
+    },
+    {
+      "name": "historical-2026-11-04.html",
+      "path": "/historical",
+      "method": "POST",
+      "form": {
+        "date": "2026-11-04"
+      },
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "len": 356799,
+      "ms": 1278,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\historical-2026-11-04.html",
+      "head": "<!-- .note(style=\"margin-bottom: 1rem;\")div * Queued order represents cummulative volume of all orders placed in the trading system during the day.\ndiv ** Cancelled order represents volume of all the cancelled orders excluding the orders cancelled by the trading system during dump state.\n--><div cla"
+    },
+    {
+      "name": "historical-2026-11-03.html",
+      "path": "/historical",
+      "method": "POST",
+      "form": {
+        "date": "2026-11-03"
+      },
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "len": 352744,
+      "ms": 1007,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\historical-2026-11-03.html",
+      "head": "<!-- .note(style=\"margin-bottom: 1rem;\")div * Queued order represents cummulative volume of all orders placed in the trading system during the day.\ndiv ** Cancelled order represents volume of all the cancelled orders excluding the orders cancelled by the trading system during dump state.\n--><div cla"
+    },
+    {
+      "name": "historical-2026-11-02.html",
+      "path": "/historical",
+      "method": "POST",
+      "form": {
+        "date": "2026-11-02"
+      },
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "len": 346726,
+      "ms": 1287,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\historical-2026-11-02.html",
+      "head": "<!-- .note(style=\"margin-bottom: 1rem;\")div * Queued order represents cummulative volume of all orders placed in the trading system during the day.\ndiv ** Cancelled order represents volume of all the cancelled orders excluding the orders cancelled by the trading system during dump state.\n--><div cla"
+    },
+    {
+      "name": "historical-2026-10-30.html",
+      "path": "/historical",
+      "method": "POST",
+      "form": {
+        "date": "2026-10-30"
+      },
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "len": 410241,
+      "ms": 2046,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\historical-2026-10-30.html",
+      "head": "<!-- .note(style=\"margin-bottom: 1rem;\")div * Queued order represents cummulative volume of all orders placed in the trading system during the day.\ndiv ** Cancelled order represents volume of all the cancelled orders excluding the orders cancelled by the trading system during dump state.\n--><div cla"
+    },
+    {
+      "name": "historical-2026-10-29.html",
+      "path": "/historical",
+      "method": "POST",
+      "form": {
+        "date": "2026-10-29"
+      },
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "len": 403385,
+      "ms": 1424,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\historical-2026-10-29.html",
+      "head": "<!-- .note(style=\"margin-bottom: 1rem;\")div * Queued order represents cummulative volume of all orders placed in the trading system during the day.\ndiv ** Cancelled order represents volume of all the cancelled orders excluding the orders cancelled by the trading system during dump state.\n--><div cla"
+    },
+    {
+      "name": "historical-2026-10-28.html",
+      "path": "/historical",
+      "method": "POST",
+      "form": {
+        "date": "2026-10-28"
+      },
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "len": 402106,
+      "ms": 1409,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\historical-2026-10-28.html",
+      "head": "<!-- .note(style=\"margin-bottom: 1rem;\")div * Queued order represents cummulative volume of all orders placed in the trading system during the day.\ndiv ** Cancelled order represents volume of all the cancelled orders excluding the orders cancelled by the trading system during dump state.\n--><div cla"
+    },
+    {
+      "name": "historical-2026-10-27.html",
+      "path": "/historical",
+      "method": "POST",
+      "form": {
+        "date": "2026-10-27"
+      },
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "len": 400410,
+      "ms": 1251,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\historical-2026-10-27.html",
+      "head": "<!-- .note(style=\"margin-bottom: 1rem;\")div * Queued order represents cummulative volume of all orders placed in the trading system during the day.\ndiv ** Cancelled order represents volume of all the cancelled orders excluding the orders cancelled by the trading system during dump state.\n--><div cla"
+    },
+    {
+      "name": "historical-2026-10-26.html",
+      "path": "/historical",
+      "method": "POST",
+      "form": {
+        "date": "2026-10-26"
+      },
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "len": 392303,
+      "ms": 1288,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\historical-2026-10-26.html",
+      "head": "<!-- .note(style=\"margin-bottom: 1rem;\")div * Queued order represents cummulative volume of all orders placed in the trading system during the day.\ndiv ** Cancelled order represents volume of all the cancelled orders excluding the orders cancelled by the trading system during dump state.\n--><div cla"
+    },
+    {
+      "name": "historical-2026-10-23.html",
+      "path": "/historical",
+      "method": "POST",
+      "form": {
+        "date": "2026-10-23"
+      },
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "len": 378369,
+      "ms": 1301,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\historical-2026-10-23.html",
+      "head": "<!-- .note(style=\"margin-bottom: 1rem;\")div * Queued order represents cummulative volume of all orders placed in the trading system during the day.\ndiv ** Cancelled order represents volume of all the cancelled orders excluding the orders cancelled by the trading system during dump state.\n--><div cla"
+    },
+    {
+      "name": "historical-2026-10-22.html",
+      "path": "/historical",
+      "method": "POST",
+      "form": {
+        "date": "2026-10-22"
+      },
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "len": 370230,
+      "ms": 1141,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\historical-2026-10-22.html",
+      "head": "<!-- .note(style=\"margin-bottom: 1rem;\")div * Queued order represents cummulative volume of all orders placed in the trading system during the day.\ndiv ** Cancelled order represents volume of all the cancelled orders excluding the orders cancelled by the trading system during dump state.\n--><div cla"
+    },
+    {
+      "name": "historical-2026-10-21.html",
+      "path": "/historical",
+      "method": "POST",
+      "form": {
+        "date": "2026-10-21"
+      },
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "len": 366708,
+      "ms": 1268,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\historical-2026-10-21.html",
+      "head": "<!-- .note(style=\"margin-bottom: 1rem;\")div * Queued order represents cummulative volume of all orders placed in the trading system during the day.\ndiv ** Cancelled order represents volume of all the cancelled orders excluding the orders cancelled by the trading system during dump state.\n--><div cla"
+    },
+    {
+      "name": "historical-2026-10-20.html",
+      "path": "/historical",
+      "method": "POST",
+      "form": {
+        "date": "2026-10-20"
+      },
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "len": 358385,
+      "ms": 1375,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\historical-2026-10-20.html",
+      "head": "<!-- .note(style=\"margin-bottom: 1rem;\")div * Queued order represents cummulative volume of all orders placed in the trading system during the day.\ndiv ** Cancelled order represents volume of all the cancelled orders excluding the orders cancelled by the trading system during dump state.\n--><div cla"
+    },
+    {
+      "name": "historical-2026-10-19.html",
+      "path": "/historical",
+      "method": "POST",
+      "form": {
+        "date": "2026-10-19"
+      },
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "len": 359890,
+      "ms": 1861,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\historical-2026-10-19.html",
+      "head": "<!-- .note(style=\"margin-bottom: 1rem;\")div * Queued order represents cummulative volume of all orders placed in the trading system during the day.\ndiv ** Cancelled order represents volume of all the cancelled orders excluding the orders cancelled by the trading system during dump state.\n--><div cla"
+    },
+    {
+      "name": "historical-2026-10-16.html",
+      "path": "/historical",
+      "method": "POST",
+      "form": {
+        "date": "2026-10-16"
+      },
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "len": 356258,
+      "ms": 1503,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\historical-2026-10-16.html",
+      "head": "<!-- .note(style=\"margin-bottom: 1rem;\")div * Queued order represents cummulative volume of all orders placed in the trading system during the day.\ndiv ** Cancelled order represents volume of all the cancelled orders excluding the orders cancelled by the trading system during dump state.\n--><div cla"
+    },
+    {
+      "name": "historical-2026-10-15.html",
+      "path": "/historical",
+      "method": "POST",
+      "form": {
+        "date": "2026-10-15"
+      },
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "len": 358589,
+      "ms": 1018,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\historical-2026-10-15.html",
+      "head": "<!-- .note(style=\"margin-bottom: 1rem;\")div * Queued order represents cummulative volume of all orders placed in the trading system during the day.\ndiv ** Cancelled order represents volume of all the cancelled orders excluding the orders cancelled by the trading system during dump state.\n--><div cla"
+    },
+    {
+      "name": "historical-2026-10-14.html",
+      "path": "/historical",
+      "method": "POST",
+      "form": {
+        "date": "2026-10-14"
+      },
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "len": 363570,
+      "ms": 1080,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\historical-2026-10-14.html",
+      "head": "<!-- .note(style=\"margin-bottom: 1rem;\")div * Queued order represents cummulative volume of all orders placed in the trading system during the day.\ndiv ** Cancelled order represents volume of all the cancelled orders excluding the orders cancelled by the trading system during dump state.\n--><div cla"
+    },
+    {
+      "name": "announcements-page.html",
+      "path": "/announcements",
+      "method": "GET",
+      "form": null,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "len": 109153,
+      "ms": 0,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\announcements-page.html",
+      "head": "<!DOCTYPE html><html><head><meta http-equiv=\"origin-trial\" content=\"A7vZI3v+Gz7JfuRolKNM4Aff6zaGuT7X0mf3wtoZTnKv6497cVMnhy03KDqX7kBz/q/iidW7srW31oQbBt4VhgoAAACUeyJvcmlnaW4iOiJodHRwczovL3d3dy5nb29nbGUuY29tOjQ0MyIsImZlYXR1cmUiOiJEaXNhYmxlVGhpcmRQYXJ0eVN0b3JhZ2VQYXJ0aXRpb25pbmczIiwiZXhwaXJ5IjoxNzU3OTgw"
+    },
+    {
+      "name": "announcements-companies.html",
+      "path": "/announcements/companies",
+      "method": "GET",
+      "form": null,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "len": 121604,
+      "ms": 0,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\announcements-companies.html",
+      "head": "<!DOCTYPE html><html><head><meta http-equiv=\"origin-trial\" content=\"A7vZI3v+Gz7JfuRolKNM4Aff6zaGuT7X0mf3wtoZTnKv6497cVMnhy03KDqX7kBz/q/iidW7srW31oQbBt4VhgoAAACUeyJvcmlnaW4iOiJodHRwczovL3d3dy5nb29nbGUuY29tOjQ0MyIsImZlYXR1cmUiOiJEaXNhYmxlVGhpcmRQYXJ0eVN0b3JhZ2VQYXJ0aXRpb25pbmczIiwiZXhwaXJ5IjoxNzU3OTgw"
+    },
+    {
+      "name": "indices-KSE100.html",
+      "path": "/indices/KSE100",
+      "method": "GET",
+      "form": null,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "len": 74625,
+      "ms": 0,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\indices-KSE100.html",
+      "head": "<html><head></head><body><h2 style=\"margin-top:0;\">KSE 100 INDEX Constituents</h2><div class=\"tbl__wrapper\"><table class=\"tbl\" data-page-length=\"25\"><thead class=\"tbl__head\"><tr><th>SYMBOL</th><th style=\"width:180px;\">NAME</th><th class=\"right\">LDCP</th><th class=\"right\">CURRENT</th><th class=\"right"
+    },
+    {
+      "name": "indices-KMI30.html",
+      "path": "/indices/KMI30",
+      "method": "GET",
+      "form": null,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "len": 23061,
+      "ms": 0,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\indices-KMI30.html",
+      "head": "<html><head></head><body><h2 style=\"margin-top:0;\">KMI INDEX Constituents</h2><div class=\"tbl__wrapper\"><table class=\"tbl\" data-page-length=\"25\"><thead class=\"tbl__head\"><tr><th>SYMBOL</th><th style=\"width:180px;\">NAME</th><th class=\"right\">LDCP</th><th class=\"right\">CURRENT</th><th class=\"right\">CH"
+    },
+    {
+      "name": "indices-KMIALL.html",
+      "path": "/indices/KMIALL",
+      "method": "GET",
+      "form": null,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "len": 92907,
+      "ms": 0,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\indices-KMIALL.html",
+      "head": "<!DOCTYPE html><html><head><meta http-equiv=\"origin-trial\" content=\"A7vZI3v+Gz7JfuRolKNM4Aff6zaGuT7X0mf3wtoZTnKv6497cVMnhy03KDqX7kBz/q/iidW7srW31oQbBt4VhgoAAACUeyJvcmlnaW4iOiJodHRwczovL3d3dy5nb29nbGUuY29tOjQ0MyIsImZlYXR1cmUiOiJEaXNhYmxlVGhpcmRQYXJ0eVN0b3JhZ2VQYXJ0aXRpb25pbmczIiwiZXhwaXJ5IjoxNzU3OTgw"
+    },
+    {
+      "name": "indices.html",
+      "path": "/indices",
+      "method": "GET",
+      "form": null,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "len": 125148,
+      "ms": 0,
+      "file": "D:\\PSX\\day-trader\\tests\\fixtures\\raw\\indices.html",
+      "head": "<!DOCTYPE html><html><head><meta http-equiv=\"origin-trial\" content=\"A7vZI3v+Gz7JfuRolKNM4Aff6zaGuT7X0mf3wtoZTnKv6497cVMnhy03KDqX7kBz/q/iidW7srW31oQbBt4VhgoAAACUeyJvcmlnaW4iOiJodHRwczovL3d3dy5nb29nbGUuY29tOjQ0MyIsImZlYXR1cmUiOiJEaXNhYmxlVGhpcmRQYXJ0eVN0b3JhZ2VQYXJ0aXRpb25pbmczIiwiZXhwaXJ5IjoxNzU3OTgw"
+    }
+  ]
+}

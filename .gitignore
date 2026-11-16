@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project state (per-user; do not commit)
+psx/
+!psx/.gitkeep
+
+# Reference clone (do NOT ship; this is the US skill we ported from)
+reference/
+
+# Pause / resume checkpoints
+work-state/
+
+# Scratch
+scratchpad/
+.claude/skills/*/state/
