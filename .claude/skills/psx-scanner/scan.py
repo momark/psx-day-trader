@@ -321,7 +321,8 @@ def cmd_daily(args) -> int:
                 "oversold_bounce": "bouncing from oversold",
             }
             parts = [f"{len(syms)} {phrase.get(rule, rule)} "
-                     f"({', '.join(syms[:4])}{'…' if len(syms) > 4 else ''})"
+                     f"({', '.join(syms[:4])}"
+                     f"{f' and {len(syms)-4} more' if len(syms) > 4 else ''})"
                      for rule, syms in by_rule.items()]
             print(f"Scanner says: looked at {len(symbols)} stocks. "
                   f"Found {len(setups)} setups - " + "; ".join(parts) + ".")

@@ -29,7 +29,7 @@ python3 "${CLAUDE_SKILL_DIR}/entry.py" OGDC --or-minutes 15
 
 Flags: `--or-minutes 15`, `--settle 60` (seconds after a bar's close
 before trusting it), `--at HH:MM` and `--now "YYYY-MM-DD HH:MM"` (PKT)
-for replay, `--offline PATH`, `--json`.
+for replay, `--offline PATH`, `--json`, `--brief`, `--force`.
 
 ## Entry rules
 
@@ -59,6 +59,15 @@ Writes `psx/entry.json`:
 
 If no trigger fires before the cutoff, writes `{symbol, side, rule,
 status: "no_entry"}`.
+
+Every run also writes an audit copy at `psx/entries/<SYMBOL>.json`, so
+scanning several candidates in one session never loses an earlier result.
+
+**Clobber guard.** If `psx/entry.json` already holds a *fired* entry for
+a different symbol, a new entry run will NOT overwrite it: the chained
+psx-exit / psx-budget / psx-risk / psx-ticket plan stays valid, and the
+new result lands only in the audit folder. Pass `--force` to replace
+the active plan, or delete `psx/entry.json` first.
 
 ## Session timing
 

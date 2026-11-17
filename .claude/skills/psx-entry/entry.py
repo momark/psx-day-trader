@@ -24,6 +24,7 @@ PKT = ZoneInfo("Asia/Karachi")
 
 OUT_DIR = "psx"
 ENTRY_JSON = os.path.join(OUT_DIR, "entry.json")
+ENTRIES_DIR = os.path.join(OUT_DIR, "entries")
 
 
 def _bar_closed(bar_time: dt.datetime, now: dt.datetime, settle_s: int) -> bool:
@@ -95,6 +96,9 @@ def main(argv=None) -> int:
     p.add_argument("--offline")
     p.add_argument("--json", action="store_true")
     p.add_argument("--brief", action="store_true")
+    p.add_argument("--force", action="store_true",
+                   help="Overwrite psx/entry.json even if it holds a fired entry "
+                        "for a different symbol.")
     args = p.parse_args(argv)
 
     if args.offline:
@@ -148,8 +152,34 @@ def main(argv=None) -> int:
         })
 
     os.makedirs(OUT_DIR, exist_ok=True)
-    with open(ENTRY_JSON, "w", encoding="utf-8") as fh:
+    os.makedirs(ENTRIES_DIR, exist_ok=True)
+    # Always write a per-symbol audit copy so a later scan can't lose history.
+    audit_path = os.path.join(ENTRIES_DIR, f"{args.symbol}.json")
+    with open(audit_path, "w", encoding="utf-8") as fh:
         json.dump(out, fh, indent=2)
+
+    # Guard psx/entry.json: don't let a scan of another symbol silently clobber
+    # a fired entry that psx-exit / psx-budget / psx-ticket are chained to.
+    skipped_entry_json = False
+    if os.path.exists(ENTRY_JSON) and not args.force:
+        try:
+            with open(ENTRY_JSON, encoding="utf-8") as fh:
+                existing = json.load(fh)
+        except Exception:
+            existing = None
+        if (existing and existing.get("status") != "no_entry"
+                and existing.get("symbol") != args.symbol):
+            skipped_entry_json = True
+            print(f"refusing to overwrite psx/entry.json: it holds a fired entry "
+                  f"for {existing['symbol']} at "
+                  f"PKR {existing.get('trigger_price')}. "
+                  f"Audit copy saved to {audit_path}. "
+                  f"Pass --force to replace, or delete psx/entry.json first.",
+                  file=sys.stderr)
+    if not skipped_entry_json:
+        with open(ENTRY_JSON, "w", encoding="utf-8") as fh:
+            json.dump(out, fh, indent=2)
+
     if args.json:
         print(json.dumps(out, indent=2))
     else:
@@ -190,6 +220,11 @@ def main(argv=None) -> int:
         else:
             print(f"Entry says: {direction} {sym} at PKR {out['trigger_price']} "
                   f"({out['trigger_time']}) - it {fired_eng}.")
+        if skipped_entry_json:
+            print(f"Entry says: kept the existing plan in psx/entry.json "
+                  f"(it already holds a fired entry for another symbol). "
+                  f"This {sym} result is saved to {audit_path} - "
+                  f"pass --force if you want it to become the active plan.")
     return 0
 
 
