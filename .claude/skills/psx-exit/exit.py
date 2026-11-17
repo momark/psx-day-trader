@@ -54,6 +54,7 @@ def main(argv=None) -> int:
     p.add_argument("--entry", default=ENTRY_JSON)
     p.add_argument("--out", default=PLAN_JSON)
     p.add_argument("--json", action="store_true")
+    p.add_argument("--brief", action="store_true")
     args = p.parse_args(argv)
 
     if not os.path.exists(args.entry):
@@ -115,6 +116,17 @@ def main(argv=None) -> int:
         print(f"wrote {args.out}: {plan['symbol']} {plan['side']} "
               f"entry {plan['entry']}  stop {plan['stop']} ({plan['stop_label']})  "
               f"target {plan['target']}  R/R={plan['rr']}", file=sys.stderr)
+
+    if args.brief:
+        sym = plan["symbol"]
+        side_eng = "Buy" if side == "long" else "Short"
+        risk_eng = plan["risk_per_share"]
+        rew_eng = plan["reward_per_share"]
+        print(f"Exit says: {side_eng} {sym} at PKR {plan['entry']}. "
+              f"Cut the loss if it hits PKR {plan['stop']} ({plan['stop_detail']}). "
+              f"Take profit at PKR {plan['target']}. "
+              f"You risk PKR {risk_eng}/share to make PKR {rew_eng}/share "
+              f"(reward is {plan['rr']}x the risk).")
     return 0
 
 

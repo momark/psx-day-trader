@@ -21,7 +21,10 @@ Most people who day-trade lose money. This pack does not change that.**
 ## What's inside
 
 The pack has one shared HTTP helper (`.claude/skills/_lib/psx_http.py`) and
-ten skills:
+ten skills. **Every skill accepts `--brief`**, which prints one plain-English
+sentence instead of a terse machine summary - the fastest way to see what
+the pipeline is telling you. `--json` prints the full machine output; both
+flags can be combined.
 
 | Skill | What it does |
 | --- | --- |
@@ -36,99 +39,65 @@ ten skills:
 | **psx-alerts** | Small price / time alert list (above, below, pct_move, time, opening_bell). |
 | **psx-analyst** | Lists every quarterly / half-year / annual financial-report PDF URL on `financials.psx.com.pk` and the recency of the latest one. |
 
+## The pipeline in plain English
+
+One stock, top to bottom. Each skill reads what the one before it wrote.
+
+| # | Skill | What it does for one stock | What it writes |
+| - | --- | --- | --- |
+| 1 | **psx-scanner** | Finds stocks that are moving in interesting ways today (new 20-day high, bull flag, bouncing off support, oversold, reclaiming an average). | `psx/watchlist.json` |
+| 2 | **psx-news** | Pulls PSX announcements (dividends, meetings, financial results) for those stocks. | `psx/state/news.json` |
+| 3 | **psx-entry** | Watches the live price and tells you the exact moment to buy - when the price breaks the first 15 minutes of trading and a full 5-minute bar closes above it. | `psx/entry.json` |
+| 4 | **psx-exit** | Sets two prices before you buy: a stop where you cut the loss, a target where you take the profit. | `psx/plan.json` |
+| 5 | **psx-timemachine** | Replays the same plan against the last 60 trading days, 10,000 times. Tells you whether the odds historically favour the target or the stop. | `psx/timemachine.json` |
+| 6 | **psx-budget** | Figures out how many shares you can afford, and shows every PSX fee and tax before and after the trade. | `psx/order.json` |
+| 7 | **psx-risk** | Runs 12 safety checks (cash, position-size cap, PSX circuit breaker, stop on the right side, net reward/risk, daily loss budget, trading window, holidays, Shariah, duplicates, fingerprint, cost sanity). | `psx/state/risk.json` |
+| 8 | **psx-ticket** | Prints a paper ticket you enter by hand in your broker's app. Refuses if risk failed. | `psx/state/broker.json` |
+
+Two side tools:
+
+- **psx-alerts** - a small pager for prices and times (`"alert me when LUCK goes above 450"`).
+- **psx-analyst** - fundamentals lookup (last annual report, dividend history, recency).
+
 ## What it looks like
 
-End-to-end on one symbol (HUBC, run against captured fixtures from
-2026-11-16):
+Every skill accepts `--brief`, which prints one plain-English sentence to stdout
+instead of (or alongside) its JSON. Here is one trade start to finish, run
+against captured fixtures from 2026-11-16 - no network needed.
 
 ```
-$ psx-scanner daily --symbols OGDC,HUBC,LUCK,ENGROH
-  wrote psx/watchlist.json: 3 setups (scanned 4)
+$ psx-scanner daily --symbols HUBC,OGDC,LUCK,ENGROH,MARI --brief
+Scanner says: looked at 5 stocks. Found 3 setups - 2 forming a bull flag (HUBC, LUCK); 1 breaking out to a new 20-day high (ENGROH).
 
-  [
-    {"symbol": "HUBC",   "rule": "bull_flag",    "close": 207.02,
-     "move_pct": 10.7, "pull_pct": 3.1},
-    {"symbol": "LUCK",   "rule": "bull_flag",    "close": 444.52,
-     "move_pct": 13.9, "pull_pct": 3.3},
-    {"symbol": "ENGROH", "rule": "breakout_20d", "close": 279.42,
-     "prev_20d_high": 278.89, "volume": 1_509_493}
-  ]
+$ psx-news --symbols LUCK --brief
+News says: no announcements for your watchlist in the window.
 
-$ psx-entry HUBC --rule orb --long --at 15:00
-  HUBC orb long: TRIGGER at 09:55 @ 208
+$ psx-entry LUCK --at 11:00 --brief
+Entry says: buy LUCK at PKR 452.45 (09:50) - it broke above the morning high of PKR 451.5.
 
-$ psx-exit --stop or-low --rr 2
-  HUBC long entry 208.00  stop 204.30 (or-low)  target 215.40  R/R=2.0
+$ psx-exit --brief
+Exit says: Buy LUCK at PKR 452.45. Cut the loss if it hits PKR 448.75 (mid-point of the opening range). Take profit at PKR 459.85. You risk PKR 3.7/share to make PKR 7.4/share (reward is 2.0x the risk).
 
-$ psx-timemachine --draws 10000 --horizon-days 5
-  HUBC long  entry=208.0  stop=204.3  target=215.4
-    10,000 draws, 5-day horizon, pool=60 days:
-    target= 20.7%  stop= 44.9%  neither= 34.4%
-    median final price: 206.71
-    VERDICT: STRONG_STOP
+$ psx-timemachine --brief
+Time Machine says: replayed this LUCK plan 10,000 times against the last 60 days. 33% hit the target, 66% hit the stop, 1% hit neither. The odds look bad - the stop hit far more often than the target.
 
-  final-price distribution:
-     199.22  |##
-     200.45  |######
-     201.68  |###################
-     202.90  |#######################
-     204.13  |##########################################
-     205.35  |################################################
-     206.58  |###############
-     207.81  |##################
-     209.03  |################
-     210.26  |################
-     211.49  |##############
-     212.71  |##########
-     213.94  |##########
-     215.16  |#######################
-     216.39  |#################
-     217.62  |########
-     218.84  |####
-     220.07  |##
-     221.30  |#
+$ psx-budget --brief
+Budget says: you can afford 110 shares of LUCK (gross PKR 49,770), capped by your 10% single-position cap. Round-trip fees + CGT would eat PKR 309. After costs you net PKR 505 if the target hits versus PKR 592 if the stop hits (0.85x reward for risk).
 
-$ psx-budget                       # size against 4 limits, apply PSX costs
-  HUBC long qty=240 (max_position_pct)  net R/R=1.23
+$ psx-risk --prev-close 453 --brief
+Risk says: 12/12 checks pass. all clear - safe to write the ticket.
 
-$ psx-risk --prev-close 205.74 --shariah warn
-  PASS  shape                qty=240, long
-  PASS  cash                 49920.0 <= 500000.0
-  PASS  position_pct         49920.0 <= 50000 (10.0% cap)
-  PASS  circuit_breaker      inside [189.28, 222.20] (prev=205.74, 8% or Re 1)
-  PASS  net_rr               net R/R=1.23 (needs >= 0.5)
-  PASS  daily_loss           today=0.0 + this=1072.21 <= 15000
-  PASS  trading_window       regular session
-  PASS  short_sell           long trade
-  PASS  shariah              HUBC in KMI-ALL
-  PASS  duplicate            fresh
-  PASS  fingerprint_stable   26bfaceb47af204e
-  PASS  cost_sanity          round-trip fixed = 188.91
-
-  verdict: PASS  (fingerprint 26bfaceb47af204e)
-
-$ psx-ticket write --approve yes
-  ====================================================
-  ================= PSX PAPER TICKET =================
-  Fingerprint: 26bfaceb47af204e
-  Symbol:      HUBC                Side: LONG
-  Order type:  LIMIT               TIF:  DAY
-  Entry:       PKR 208.00          Qty:  240
-  Stop:        PKR 204.30 (or-low)
-  Target:      PKR 215.40 (R/R 2.0)
-  ----------------------------------------------------
-  Gross cost:  PKR 49,920.00       Net R/R: 1.23 (after costs + CGT)
-  Risk net:    PKR 1,072.21        Reward net: PKR 1,320.69
-  ----------------------------------------------------
-  Risk verdict: PASS   Attention: none
-  ----------------------------------------------------
-  Type EXACTLY "yes" to record this order:
-  ====================================================
+$ psx-ticket write --approve yes --brief
+Ticket says: Buy 110 LUCK at PKR 452.45 (limit, day). Stop PKR 448.75, target PKR 459.85. Order 283079937f7c7caa is recorded as pending - enter it in your broker's app by hand, then run `ticket.py fill 283079937f7c7caa --price X --qty Y` once it fills.
 ```
 
-Notice what the Time Machine does to the plan: a 2.0 gross R/R trade on
-a historically stop-heavy symbol becomes a **STRONG_STOP** verdict with
-45 % stop-hit over 5 days. Paper-trade it first.
+Notice what the Time Machine does to the plan: a 2x gross R/R trade on
+a historically stop-heavy symbol comes back **STRONG_STOP** - 66 % hit
+the stop over 5 days, not the target. The budget shows the fees eating
+the edge. Paper-trade it first.
+
+Drop `--brief` for the full machine output: JSON files and per-check
+breakdowns. Pass `--json` for stdout JSON. Pass both for both.
 
 ## Install
 
@@ -155,39 +124,42 @@ has a `name:` field. The ten skills register as `psx-scanner`,
 All commands below use a fictitious trading day; replace symbols and
 timing with what the scanner surfaces for you.
 
+Pass `--brief` to any of these to read one plain-English sentence instead
+of the JSON summary.
+
 ```bash
 # 1. Build the watchlist for today (KSE-100 only, or Shariah only).
-python3 .claude/skills/psx-scanner/scan.py universe --index KSE100
-python3 .claude/skills/psx-scanner/scan.py daily --min-price 10 --min-volume 500000
+python3 .claude/skills/psx-scanner/scan.py universe --index KSE100 --brief
+python3 .claude/skills/psx-scanner/scan.py daily --min-price 10 --min-volume 500000 --brief
 
 # 2. See the overnight announcements for the symbols you now care about.
-python3 .claude/skills/psx-news/news.py
+python3 .claude/skills/psx-news/news.py --brief
 
 # 3. After the opening range closes (~09:47 PKT), run the ORB scan.
-python3 .claude/skills/psx-scanner/scan.py orb
+python3 .claude/skills/psx-scanner/scan.py orb --brief
 
 # 4. Pick one symbol; watch for its ORB entry.
-python3 .claude/skills/psx-entry/entry.py HUBC --rule orb --long
+python3 .claude/skills/psx-entry/entry.py HUBC --rule orb --long --brief
 
 # 5. Plan the exit.
-python3 .claude/skills/psx-exit/exit.py --stop or-low --rr 2
+python3 .claude/skills/psx-exit/exit.py --stop or-low --rr 2 --brief
 
 # 6. Sanity-check against history.
-python3 .claude/skills/psx-timemachine/timemachine.py --horizon-days 3
+python3 .claude/skills/psx-timemachine/timemachine.py --horizon-days 3 --brief
 
 # 7. Size the position with PSX costs (first run writes a default psx/config.json; edit it).
-python3 .claude/skills/psx-budget/size.py
+python3 .claude/skills/psx-budget/size.py --brief
 
 # 8. Pre-flight checks.
-python3 .claude/skills/psx-risk/check.py --prev-close 207.33 --shariah warn
+python3 .claude/skills/psx-risk/check.py --prev-close 207.33 --shariah warn --brief
 
 # 9. Print the paper ticket; type "yes" exactly to record it.
-python3 .claude/skills/psx-ticket/ticket.py write --approve yes
+python3 .claude/skills/psx-ticket/ticket.py write --approve yes --brief
 
 # ... place the order BY HAND in your broker's app ...
 
 # 10. Come back and record the actual fill.
-python3 .claude/skills/psx-ticket/ticket.py fill <fingerprint> --price 208.25 --qty 240
+python3 .claude/skills/psx-ticket/ticket.py fill <fingerprint> --price 208.25 --qty 240 --brief
 ```
 
 Through Claude Code you also just say "scan the PSX", "ORB entry on HUBC",

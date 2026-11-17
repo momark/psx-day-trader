@@ -277,6 +277,7 @@ def main(argv=None) -> int:
     p.add_argument("--now")
     p.add_argument("--offline")
     p.add_argument("--json", action="store_true")
+    p.add_argument("--brief", action="store_true")
     args = p.parse_args(argv)
 
     if not os.path.exists(args.order):
@@ -322,6 +323,42 @@ def main(argv=None) -> int:
         for c in checks:
             print(f"  {c['status']:<4}  {c['name']:<20} {c['detail']}")
         print(f"\nverdict: {verdict}  (fingerprint {out['fingerprint']})")
+
+    if args.brief:
+        pass_n = sum(1 for c in checks if c["status"] == "PASS")
+        warn_n = sum(1 for c in checks if c["status"] == "WARN")
+        fail_n = sum(1 for c in checks if c["status"] == "FAIL")
+        total = len(checks)
+        check_eng = {
+            "shape": "order shape",
+            "cash": "enough cash",
+            "position_pct": "position-size cap",
+            "circuit_breaker": "PSX circuit breaker",
+            "net_rr": "reward vs risk",
+            "daily_loss": "daily loss budget",
+            "trading_window": "market open",
+            "short_sell": "short-sell rules",
+            "shariah": "Shariah compliance",
+            "duplicate": "duplicate order",
+            "fingerprint_stable": "order fingerprint",
+            "cost_sanity": "fees look sane",
+        }
+        bad_lines = []
+        for c in checks:
+            if c["status"] != "PASS":
+                nm = check_eng.get(c["name"], c["name"])
+                bad_lines.append(f"{c['status']} on {nm} ({c['detail']})")
+        verdict_eng = {
+            "PASS": "all clear - safe to write the ticket",
+            "WARN": "mostly clear with warnings - read them before you trade",
+            "FAIL": "DO NOT TRADE - at least one hard check failed",
+        }[verdict]
+        if bad_lines:
+            print(f"Risk says: {pass_n}/{total} checks pass "
+                  f"({warn_n} warn, {fail_n} fail). {verdict_eng}. "
+                  f"Issues: " + "; ".join(bad_lines) + ".")
+        else:
+            print(f"Risk says: {pass_n}/{total} checks pass. {verdict_eng}.")
     return 0 if verdict != "FAIL" else 1
 
 

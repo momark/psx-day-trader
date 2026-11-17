@@ -92,6 +92,16 @@ def cmd_add(args) -> int:
     print(f"added {alert['id']}: {sym} {rule}"
           f"{' ' + str(args.value) if args.value is not None else ''}",
           file=sys.stderr)
+    if args.brief:
+        phrase = {
+            "above": f"{sym} goes to PKR {args.value} or higher",
+            "below": f"{sym} drops to PKR {args.value} or lower",
+            "pct_move": f"{sym} moves {args.value}% from yesterday's close",
+            "time": f"the clock hits {args.value} PKT",
+            "opening_bell": "the market opens",
+        }.get(rule, f"{sym} {rule} {args.value}")
+        print(f"Alerts says: I'll watch for {phrase}. "
+              f"Run `alerts.py check` to test it against the latest price.")
     return 0
 
 
@@ -178,6 +188,20 @@ def cmd_check(args) -> int:
                          if a.get("triggered_price") is not None else "")
                 print(f"  TRIGGERED  {a['id']}  {a['symbol']} {a['rule']} "
                       f"{a.get('value', '')}{extra}", file=sys.stderr)
+    if args.brief:
+        if not fired:
+            active = sum(1 for a in state["alerts"] if a["status"] == "active")
+            print(f"Alerts says: nothing fired. "
+                  f"{active} alert(s) still watching.")
+        else:
+            parts = []
+            for a in fired:
+                tp = a.get("triggered_price")
+                tail = f" (hit PKR {tp})" if tp is not None else ""
+                parts.append(f"{a['symbol']} {a['rule']} {a.get('value','')}"
+                             .strip() + tail)
+            print(f"Alerts says: {len(fired)} alert(s) fired - "
+                  + "; ".join(parts) + ".")
     return 0
 
 
@@ -191,10 +215,18 @@ def cmd_list(args) -> int:
         return 0
     if not alerts:
         print("no alerts", file=sys.stderr)
+        if args.brief:
+            print("Alerts says: no alerts on file.")
         return 0
     for a in alerts:
         print(f"  {a['id']}  {a['symbol']:<10} {a['rule']:<13} "
               f"val={a.get('value')}  status={a['status']}")
+    if args.brief:
+        by_status: dict[str, int] = {}
+        for a in alerts:
+            by_status[a["status"]] = by_status.get(a["status"], 0) + 1
+        parts = ", ".join(f"{n} {s}" for s, n in by_status.items())
+        print(f"Alerts says: {len(alerts)} alert(s) on file ({parts}).")
     return 0
 
 
@@ -209,7 +241,10 @@ def cmd_clear(args) -> int:
         print("pass --triggered or --all", file=sys.stderr)
         return 2
     _save(state)
-    print(f"cleared {before - len(state['alerts'])} alerts", file=sys.stderr)
+    cleared = before - len(state["alerts"])
+    print(f"cleared {cleared} alerts", file=sys.stderr)
+    if args.brief:
+        print(f"Alerts says: cleared {cleared} alert(s).")
     return 0
 
 
@@ -221,16 +256,20 @@ def main(argv=None) -> int:
     pa.add_argument("rule",
                     choices=["above", "below", "pct_move", "time", "opening_bell"])
     pa.add_argument("value", nargs="?")
+    pa.add_argument("--brief", action="store_true")
     pc = sub.add_parser("check")
     pc.add_argument("--offline")
     pc.add_argument("--now")
     pc.add_argument("--json", action="store_true")
+    pc.add_argument("--brief", action="store_true")
     pl = sub.add_parser("list")
     pl.add_argument("--status", choices=["active", "triggered", "all"], default="all")
     pl.add_argument("--json", action="store_true")
+    pl.add_argument("--brief", action="store_true")
     pcl = sub.add_parser("clear")
     pcl.add_argument("--triggered", action="store_true")
     pcl.add_argument("--all", action="store_true")
+    pcl.add_argument("--brief", action="store_true")
     args = p.parse_args(argv)
     if args.cmd == "add": return cmd_add(args)
     if args.cmd == "check": return cmd_check(args)

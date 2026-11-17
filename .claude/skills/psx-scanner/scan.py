@@ -13,6 +13,7 @@ Shared flags:
     --now "YYYY-MM-DD HH:MM"   Pin Asia/Karachi clock (for tests).
     --offline PATH        Read from this fixtures directory instead of the network.
     --json                Print the watchlist as JSON to stdout.
+    --brief               Print one plain-English sentence to stdout.
 
 Writes:
     psx/universe.txt      One symbol per line.
@@ -102,9 +103,11 @@ def cmd_universe(args) -> int:
             print(f"warning: no constituents parsed from /indices/{index}",
                   file=sys.stderr)
         keep_syms = {s for s in idx_syms if s in keep_syms}
+        scope_label = index
         print(f"  {len(keep_syms)} symbols in {index} (of {len(idx_syms)} listed)",
               file=sys.stderr)
     else:
+        scope_label = "all common stocks"
         print(f"  {len(keep_syms)} common-stock symbols", file=sys.stderr)
 
     mkdir_p(OUT_DIR)
@@ -112,6 +115,9 @@ def cmd_universe(args) -> int:
         for sym in sorted(keep_syms):
             fh.write(sym + "\n")
     print(f"wrote {UNIVERSE_TXT} ({len(keep_syms)} symbols)")
+    if getattr(args, "brief", False):
+        print(f"Scanner says: built the universe to watch today - "
+              f"{len(keep_syms)} stocks ({scope_label}).")
     return 0
 
 
@@ -298,6 +304,27 @@ def cmd_daily(args) -> int:
         print(json.dumps(out, indent=2))
     print(f"wrote {WATCHLIST_JSON}: {len(setups)} setups "
           f"(scanned {len(symbols)}, skipped {skipped})", file=sys.stderr)
+    if args.brief:
+        if not setups:
+            print(f"Scanner says: looked at {len(symbols)} stocks. "
+                  f"Nothing interesting today.")
+        else:
+            # Group by rule for readability.
+            by_rule: dict[str, list[str]] = {}
+            for s in setups:
+                by_rule.setdefault(s["rule"], []).append(s["symbol"])
+            phrase = {
+                "breakout_20d": "breaking out to a new 20-day high",
+                "bull_flag": "forming a bull flag",
+                "reclaim_ma20": "reclaiming the 20-day average",
+                "oversold": "oversold",
+                "oversold_bounce": "bouncing from oversold",
+            }
+            parts = [f"{len(syms)} {phrase.get(rule, rule)} "
+                     f"({', '.join(syms[:4])}{'…' if len(syms) > 4 else ''})"
+                     for rule, syms in by_rule.items()]
+            print(f"Scanner says: looked at {len(symbols)} stocks. "
+                  f"Found {len(setups)} setups - " + "; ".join(parts) + ".")
     return 0
 
 
@@ -431,6 +458,26 @@ def cmd_orb(args) -> int:
         print(json.dumps(out, indent=2))
     print(f"wrote {WATCHLIST_JSON}: {len(setups)} setups "
           f"(scanned {len(symbols)})", file=sys.stderr)
+    if args.brief:
+        if not setups:
+            print(f"Scanner says: watched {len(symbols)} stocks after the open. "
+                  f"None broke their first {args.or_minutes}-minute range yet.")
+        else:
+            ups = [s for s in setups if s["rule"] == "orb_breakout_up"]
+            downs = [s for s in setups if s["rule"] == "orb_breakout_down"]
+            parts = []
+            if ups:
+                names = ", ".join(f"{s['symbol']} at {s['confirm_time']} "
+                                  f"(PKR {s['confirm_close']})" for s in ups[:3])
+                more = f" and {len(ups)-3} more" if len(ups) > 3 else ""
+                parts.append(f"{len(ups)} broke up - {names}{more}")
+            if downs:
+                names = ", ".join(f"{s['symbol']} at {s['confirm_time']} "
+                                  f"(PKR {s['confirm_close']})" for s in downs[:3])
+                more = f" and {len(downs)-3} more" if len(downs) > 3 else ""
+                parts.append(f"{len(downs)} broke down - {names}{more}")
+            print(f"Scanner says: watched {len(symbols)} stocks. "
+                  f"{'; '.join(parts)}.")
     return 0
 
 
@@ -453,6 +500,7 @@ def main(argv: list[str] | None = None) -> int:
                     choices=["KSE100", "KMI30", "KMIALL", "KMIALLSHR"])
     pu.add_argument("--shariah", action="store_true")
     pu.add_argument("--offline")
+    pu.add_argument("--brief", action="store_true")
 
     pd = sub.add_parser("daily")
     pd.add_argument("--symbols")
@@ -461,6 +509,7 @@ def main(argv: list[str] | None = None) -> int:
     pd.add_argument("--min-price", type=float, default=5.0)
     pd.add_argument("--min-volume", type=float, default=100_000)
     pd.add_argument("--json", action="store_true")
+    pd.add_argument("--brief", action="store_true")
     pd.add_argument("--now")
     pd.add_argument("--offline")
 
@@ -471,6 +520,7 @@ def main(argv: list[str] | None = None) -> int:
     po.add_argument("--max-confirm", type=int, default=200)
     po.add_argument("--at")
     po.add_argument("--json", action="store_true")
+    po.add_argument("--brief", action="store_true")
     po.add_argument("--now")
     po.add_argument("--offline")
 

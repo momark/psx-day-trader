@@ -94,6 +94,7 @@ def main(argv=None) -> int:
     p.add_argument("--now")
     p.add_argument("--offline")
     p.add_argument("--json", action="store_true")
+    p.add_argument("--brief", action="store_true")
     args = p.parse_args(argv)
 
     if args.offline:
@@ -159,6 +160,36 @@ def main(argv=None) -> int:
             print(f"{args.symbol} {args.rule} {side}: "
                   f"TRIGGER at {out['trigger_time']} @ {out['trigger_price']}",
                   file=sys.stderr)
+
+    if args.brief:
+        sym = args.symbol
+        direction = "buy" if side == "long" else "sell short"
+        or_lo, or_hi = out["or_low"], out["or_high"]
+        if args.rule == "orb":
+            if side == "long":
+                fired_eng = f"broke above the morning high of PKR {or_hi}"
+                miss_eng = (f"has not broken above its morning range "
+                            f"({or_lo}-{or_hi}) yet")
+            else:
+                fired_eng = f"broke below the morning low of PKR {or_lo}"
+                miss_eng = (f"has not broken below its morning range "
+                            f"({or_lo}-{or_hi}) yet")
+        else:
+            if side == "long":
+                fired_eng = (f"broke above the morning high of PKR {or_hi} "
+                             f"and pulled back to it")
+                miss_eng = (f"has not pulled back to its morning range "
+                            f"({or_lo}-{or_hi}) yet")
+            else:
+                fired_eng = (f"broke below the morning low of PKR {or_lo} "
+                             f"and pulled back to it")
+                miss_eng = (f"has not pulled back to its morning range "
+                            f"({or_lo}-{or_hi}) yet")
+        if out.get("status") == "no_entry":
+            print(f"Entry says: {sym} {miss_eng}. No {direction} signal.")
+        else:
+            print(f"Entry says: {direction} {sym} at PKR {out['trigger_price']} "
+                  f"({out['trigger_time']}) - it {fired_eng}.")
     return 0
 
 

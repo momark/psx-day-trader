@@ -131,6 +131,7 @@ def main(argv=None) -> int:
     p.add_argument("--plan", default=PLAN_JSON)
     p.add_argument("--out", default=ORDER_JSON)
     p.add_argument("--json", action="store_true")
+    p.add_argument("--brief", action="store_true")
     args = p.parse_args(argv)
 
     cfg = load_config(args.config)
@@ -215,6 +216,22 @@ def main(argv=None) -> int:
     else:
         print(f"wrote {args.out}: {order['symbol']} {side} "
               f"qty={qty} ({limit})  net R/R={order['net_rr']}", file=sys.stderr)
+
+    if args.brief:
+        limit_eng = {
+            "max_loss_per_trade": "your max-loss-per-trade rule",
+            "max_position_pct": f"your {cfg['max_position_pct']}% single-position cap",
+            "max_order": "your max-order-size cap",
+            "cash_available": "the cash you have",
+        }.get(limit, limit)
+        fees_total = (order["costs"]["round_trip_fixed"]
+                      + order["costs"]["cgt_on_gain"])
+        print(f"Budget says: you can afford {qty} shares of {order['symbol']} "
+              f"(gross PKR {order['gross_cost']:,.0f}), capped by {limit_eng}. "
+              f"Round-trip fees + CGT would eat PKR {fees_total:,.0f}. "
+              f"After costs you net PKR {order['net_reward_pkr']:,.0f} if the target hits "
+              f"versus PKR {order['net_risk_pkr']:,.0f} if the stop hits "
+              f"({order['net_rr']}x reward for risk).")
     return 0
 
 

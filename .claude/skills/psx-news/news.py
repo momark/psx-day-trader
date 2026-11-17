@@ -145,6 +145,7 @@ def main(argv=None) -> int:
     p.add_argument("--limit", type=int)
     p.add_argument("--offline")
     p.add_argument("--json", action="store_true")
+    p.add_argument("--brief", action="store_true")
     args = p.parse_args(argv)
 
     if args.offline:
@@ -218,6 +219,23 @@ def main(argv=None) -> int:
             sym = it["symbol"] or "-"
             print(f"  {it['date']} {it['time']}  {sym:<10} {it['kind']:<16} "
                   f"{it['title'][:60]}{rev}{star}")
+
+    if args.brief:
+        scope = "your watchlist" if syms_filter else "PSX"
+        if not items:
+            print(f"News says: no announcements for {scope} in the window.")
+        else:
+            counts: dict[str, int] = {}
+            for it in items:
+                counts[it["kind"]] = counts.get(it["kind"], 0) + 1
+            by_kind = ", ".join(f"{n} {k.replace('_', ' ')}"
+                                for k, n in sorted(counts.items(),
+                                                   key=lambda kv: -kv[1]))
+            latest = items[0]
+            sample = (f"{latest['symbol']}: {latest['title'][:60]}"
+                      if latest.get("symbol") else latest["title"][:60])
+            print(f"News says: {len(items)} announcements for {scope} "
+                  f"({by_kind}). Latest - {sample}.")
     return 0
 
 

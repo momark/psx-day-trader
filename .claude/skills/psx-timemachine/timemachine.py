@@ -107,6 +107,7 @@ def main(argv=None) -> int:
     p.add_argument("--pool-days", type=int, default=60)
     p.add_argument("--offline")
     p.add_argument("--json", action="store_true")
+    p.add_argument("--brief", action="store_true")
     args = p.parse_args(argv)
 
     if args.offline:
@@ -188,6 +189,19 @@ def main(argv=None) -> int:
         print(f"  VERDICT: {v}", file=sys.stderr)
         print("\nfinal-price distribution:", file=sys.stderr)
         print(ascii_fan(finals), file=sys.stderr)
+
+    if args.brief:
+        verdict_eng = {
+            "STRONG_TARGET": "the odds look GOOD - the target hit far more often than the stop",
+            "STRONG_STOP": "the odds look BAD - the stop hit far more often than the target",
+            "COIN_FLIP": "it's roughly a coin flip",
+            "MANY_NEITHER": f"most runs ({n_pct:.0f}%) hit neither in {args.horizon_days} days",
+            "MIXED": "the result is mixed - neither side has a clear edge",
+        }.get(v, v)
+        print(f"Time Machine says: replayed this {symbol} plan "
+              f"{args.draws:,} times against the last {args.pool_days} days. "
+              f"{t_pct:.0f}% hit the target, {s_pct:.0f}% hit the stop, "
+              f"{n_pct:.0f}% hit neither. {verdict_eng.capitalize()}.")
     return 0
 
 

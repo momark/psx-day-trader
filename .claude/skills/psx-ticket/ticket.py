@@ -91,16 +91,27 @@ def cmd_write(args) -> int:
     if risk.get("fingerprint") != fp:
         print(f"risk fingerprint {risk.get('fingerprint')} != order fingerprint {fp}; "
               f"re-run psx-risk after the change", file=sys.stderr)
+        if args.brief:
+            print(f"Ticket says: refused - the risk check was run on a "
+                  f"different order. Re-run the risk check and try again.")
         return 1
     if risk.get("verdict") == "FAIL":
         print(f"risk verdict is FAIL; refusing to write ticket "
               f"(fix the failing checks or decide not to trade)", file=sys.stderr)
+        if args.brief:
+            print(f"Ticket says: refused to print - the risk check said FAIL. "
+                  f"Fix the failing checks (or decide not to trade).")
         return 1
 
     _print_ticket(order, risk)
     if not _parse_yes(args.approve or ""):
         print("--approve was not exactly 'yes'; nothing recorded.",
               file=sys.stderr)
+        if args.brief:
+            print(f"Ticket says: ticket drafted but not recorded "
+                  f"(you did not type exactly 'yes' to approve). "
+                  f"Enter it in your broker by hand, then run "
+                  f"`ticket.py write --approve yes` to log it.")
         return 1
 
     state = _load_broker()
@@ -108,6 +119,9 @@ def cmd_write(args) -> int:
         if o["fingerprint"] == fp and o["status"] == "pending":
             print(f"duplicate fingerprint {fp} already pending; cancel it first",
                   file=sys.stderr)
+            if args.brief:
+                print(f"Ticket says: refused - an identical pending order "
+                      f"(fingerprint {fp}) is already in the log.")
             return 1
     state["orders"].append({
         "fingerprint": fp,
@@ -121,6 +135,14 @@ def cmd_write(args) -> int:
     _save_broker(state)
     print(f"recorded order {fp} ({order['symbol']} {order['side']})",
           file=sys.stderr)
+    if args.brief:
+        side_eng = "Buy" if order["side"] == "long" else "Short"
+        print(f"Ticket says: {side_eng} {order['qty']} {order['symbol']} "
+              f"at PKR {order['entry']} (limit, day). Stop PKR {order['stop']}, "
+              f"target PKR {order['target']}. "
+              f"Order {fp} is recorded as pending - "
+              f"enter it in your broker's app by hand, then run "
+              f"`ticket.py fill {fp} --price X --qty Y` once it fills.")
     return 0
 
 
@@ -131,6 +153,8 @@ def cmd_list(args) -> int:
         orders = [o for o in orders if o["status"] == args.status]
     if not orders:
         print("no orders", file=sys.stderr)
+        if args.brief:
+            print("Ticket says: no orders on file.")
         return 0
     if args.json:
         print(json.dumps(orders, indent=2))
@@ -142,6 +166,12 @@ def cmd_list(args) -> int:
                 if fill else "")
         print(f"  {o['fingerprint']}  {o['symbol']:<10} {o['side']:<6} "
               f"qty={o['qty']}  entry={o['entry']}  status={o['status']}{tail}")
+    if args.brief:
+        by_status: dict[str, int] = {}
+        for o in orders:
+            by_status[o["status"]] = by_status.get(o["status"], 0) + 1
+        parts = ", ".join(f"{n} {s}" for s, n in by_status.items())
+        print(f"Ticket says: {len(orders)} order(s) on file ({parts}).")
     return 0
 
 
@@ -150,10 +180,16 @@ def cmd_fill(args) -> int:
     order = next((o for o in state["orders"] if o["fingerprint"] == args.fingerprint), None)
     if not order:
         print(f"no order with fingerprint {args.fingerprint}", file=sys.stderr)
+        if args.brief:
+            print(f"Ticket says: no order with fingerprint {args.fingerprint}. "
+                  f"Check `ticket.py list`.")
         return 1
     if order["status"] != "pending":
         print(f"order {args.fingerprint} status is {order['status']}; "
               f"only pending orders can be filled", file=sys.stderr)
+        if args.brief:
+            print(f"Ticket says: order {args.fingerprint} is already "
+                  f"{order['status']} - can't fill it again.")
         return 1
     order["status"] = "filled"
     fill = {
@@ -178,6 +214,11 @@ def cmd_fill(args) -> int:
     _save_broker(state)
     print(f"recorded fill for {args.fingerprint} @ {args.price} x {args.qty}",
           file=sys.stderr)
+    if args.brief:
+        side_eng = "bought" if order["side"] == "long" else "sold short"
+        print(f"Ticket says: {side_eng} {args.qty} {order['symbol']} "
+              f"at PKR {args.price}. The stop and target from the plan still apply - "
+              f"watch the price.")
     return 0
 
 
@@ -186,14 +227,22 @@ def cmd_cancel(args) -> int:
     order = next((o for o in state["orders"] if o["fingerprint"] == args.fingerprint), None)
     if not order:
         print(f"no order with fingerprint {args.fingerprint}", file=sys.stderr)
+        if args.brief:
+            print(f"Ticket says: no order with fingerprint {args.fingerprint}.")
         return 1
     if order["status"] != "pending":
         print(f"order {args.fingerprint} status is {order['status']}; "
               f"only pending orders can be cancelled", file=sys.stderr)
+        if args.brief:
+            print(f"Ticket says: order {args.fingerprint} is already "
+                  f"{order['status']} - can't cancel.")
         return 1
     order["status"] = "cancelled"
     _save_broker(state)
     print(f"cancelled {args.fingerprint}", file=sys.stderr)
+    if args.brief:
+        print(f"Ticket says: cancelled order for {order['symbol']} "
+              f"(fingerprint {args.fingerprint}).")
     return 0
 
 
@@ -205,20 +254,24 @@ def main(argv=None) -> int:
     pw.add_argument("--approve")
     pw.add_argument("--order", default=ORDER_JSON)
     pw.add_argument("--risk", default=RISK_JSON)
+    pw.add_argument("--brief", action="store_true")
 
     pl = sub.add_parser("list")
     pl.add_argument("--status",
                     choices=["pending", "filled", "cancelled", "all"],
                     default="all")
     pl.add_argument("--json", action="store_true")
+    pl.add_argument("--brief", action="store_true")
 
     pf = sub.add_parser("fill")
     pf.add_argument("fingerprint")
     pf.add_argument("--price", type=float, required=True)
     pf.add_argument("--qty", type=int, required=True)
+    pf.add_argument("--brief", action="store_true")
 
     pc = sub.add_parser("cancel")
     pc.add_argument("fingerprint")
+    pc.add_argument("--brief", action="store_true")
 
     args = p.parse_args(argv)
     if args.cmd == "write":

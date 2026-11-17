@@ -73,6 +73,7 @@ def main(argv=None) -> int:
     p.add_argument("--dividends", action="store_true")
     p.add_argument("--offline")
     p.add_argument("--json", action="store_true")
+    p.add_argument("--brief", action="store_true")
     p.add_argument("--out")
     args = p.parse_args(argv)
 
@@ -131,6 +132,31 @@ def main(argv=None) -> int:
             print(f"  latest: {lr['kind']}  period {lr['period_ended']}  "
                   f"posted {lr['posted']}  lag {out.get('latest_report_lag_days')} days",
                   file=sys.stderr)
+
+    if args.brief:
+        lr = out.get("latest_report")
+        if not lr:
+            print(f"Analyst says: no financial reports listed for {sym} "
+                  f"on PSX Data Portal.")
+        else:
+            lag = out.get("latest_report_lag_days")
+            freshness = ""
+            if lag is not None:
+                if lag <= 90:
+                    freshness = f" ({lag} days old - fresh)"
+                elif lag <= 180:
+                    freshness = f" ({lag} days old - getting stale)"
+                else:
+                    freshness = f" ({lag} days old - STALE, be careful)"
+            pdf_url = lr["pdf"] if lr["pdf"].startswith("http") \
+                else f"https://dps.psx.com.pk{lr['pdf']}"
+            print(f"Analyst says: {sym} has {len(out['reports'])} reports on file. "
+                  f"Latest is the {lr['kind']} for period ending "
+                  f"{lr['period_ended']}, posted {lr['posted']}{freshness}. "
+                  f"PDF: {pdf_url}")
+            if args.dividends and out.get("dividends"):
+                print(f"Analyst says: {len(out['dividends'])} dividend/payout "
+                      f"events on record for {sym}.")
     return 0
 
 
